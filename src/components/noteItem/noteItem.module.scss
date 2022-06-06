@@ -1,0 +1,12 @@
+.note_item {
+    min-width: 50px;
+    min-height: 50px;
+    border: 1px solid #008000;
+    padding: 10px;
+
+    .tag {
+        list-style: none;
+        background-color: yellowgreen;
+    }
+}
+

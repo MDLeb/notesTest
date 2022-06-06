@@ -1,0 +1,50 @@
+.form_block {
+    width: 100%;
+    max-width: 500px;
+    min-height: 200px;
+    margin: -130px auto 0 auto;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 0 0 20px 20px;
+    background-color: #ccc;
+    transition: margin 1s ease;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    box-shadow: 0 5px 10px 2px #ccc;
+
+
+    .form_block__btns {
+        display: flex;
+    }
+
+    &:hover,
+    &.active {
+        margin-top: 0;
+    }
+    input,
+    textarea {
+        border: 0;
+        background-color: white;
+        border-radius: 5px;
+        padding: 10px;
+        &::first-letter {
+            text-transform: uppercase;
+        }
+        &::placeholder {
+            text-transform: capitalize;
+        }
+    }
+
+    .tags {
+
+        span {
+            display: inline-block;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 5px;
+            background-color: rgba(#fff, 0.5);
+        }
+    }
+}

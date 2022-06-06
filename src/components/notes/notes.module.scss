@@ -1,0 +1,9 @@
+.notes_board {
+    width: 400px;
+    min-height: 400px;
+    border: 1px solid green;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}

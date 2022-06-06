@@ -1,0 +1,37 @@
+.header {
+    min-height: 80px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 2px 10px 2px #ccc;
+    background-color: #eee;
+    .tags {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    }
+    .tag {
+        padding: 3px 5px;
+        margin: 5px;
+        border-radius: 8px;
+        opacity: 0.5;
+        cursor: pointer;
+        color: #7c7c7c;
+        background-color: rgb(249, 255, 236);
+       
+        &.active {
+            opacity: 1;
+        color: white;
+        cursor: pointer;
+        background-color: yellowgreen;
+        }
+   }
+
+   input {
+       margin: 10px auto;
+       width: 100%;
+       padding: 5px;
+       border: 0;
+       border-radius: 5px;
+   }
+}
