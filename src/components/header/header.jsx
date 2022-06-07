@@ -7,7 +7,7 @@ const Header = ({tags}) => {
     return (
         <div className={styles.header}>
             <NotesContext.Consumer>
-            {([NotesData, setNotesData,  removeNoteDB, addNoteDB, filter, setFilter]) => (
+            {([NotesData, setNotesData,  removeNoteDB, addNoteDB, updateNodeDB, filter, setFilter]) => (
                 <div>
                     <div className={styles.tags}>
                         {tags.map((tag, index) => <span key={index}

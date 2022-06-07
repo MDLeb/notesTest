@@ -1,12 +1,55 @@
 .note_item {
-    min-width: 50px;
-    min-height: 50px;
-    border: 1px solid #008000;
-    padding: 10px;
+    //height: fit-content;
+    //max-width: 300px;
+    word-wrap: break-word;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px 2px #ccc;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
-    .tag {
-        list-style: none;
-        background-color: yellowgreen;
+
+    ul {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        word-break: break-all;
     }
+    
+    .remove_btn,
+    .edit_btn {
+        display: block;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        border: 0;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    .remove_btn {
+        background: url('../../../public/source/ico_remove.png') center/60% auto no-repeat,
+                   salmon;
+    } 
+    .edit_btn {
+        background: url('../../../public/source/ico_edit.png') center/60% auto no-repeat,
+                   #ccc;
+        right: 40px;
+    }
+}
+
+.content {
+   line-height: 20px;
+   span {
+       display: inline-block;
+       border-radius: 5px;
+       background-color: rgb(200, 236, 252);
+       font-weight: 700;
+       margin: 2px;
+   } 
 }
 

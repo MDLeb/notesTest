@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './noteItem.module.scss';
 import { NotesContext } from "../../App";
+import NotesForm from "../noteForm/notesForm";
 
 
 const NoteItem = ({note}) => {
+    const highlightTags = () => {
+        let content = note.content[0];
+        note.tags.forEach(tag => {
+           content = content.replace(`${tag}`, `<span>${tag}</span>`)
+        });
+        //content = document.createElement('div').innerHTML = content;
+        return content;
+    }
+
+    const [isEditing, setIsEditing] = useState(false);
+
     return (
             <NotesContext.Consumer>
-            {([NotesData, setNotesData, removeNoteDB, addNoteDB, filter, setFilter]) => (
+            {([NotesData, setNotesData, removeNoteDB, addNoteDB, updateNodeDB, filter, setFilter]) => (
+                isEditing ? <NotesForm edit={true} note={note} changeIsEditing={setIsEditing}></NotesForm> :
                 <div className={styles.note_item}>
-                    {note.id}<br />
-                    {note.title}<br />
-                    {note.content} <br />
+                     {note.title}<br />
                     {
-                        note.tags && note.tags.length ?
-                            <ul>{note.tags.map((tag, index) => <li className={styles.tag} key={index}>{tag}</li>)}</ul> :
-                            ''
-                    }
-                    <button onClick={() => {removeNoteDB(note.id)}}>Delete</button>
+                         <div  className={styles.content} dangerouslySetInnerHTML={{__html: 
+                            highlightTags()}}></div>
+                    } <br />
+                    <button className={styles.remove_btn} onClick={() => {removeNoteDB(note.id)}}></button>
+                    <button className={styles.edit_btn} onClick={() => {setIsEditing(true)}}></button>
                 </div>
             )}
         </NotesContext.Consumer>

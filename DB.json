@@ -1,13 +1,13 @@
 {
   "notes": [
     {
-      "title": "title1",
+      "title": "Initial note",
       "content": [
-        "content #tag1 #tag2"
+        "#tag1 #TAG1 sometext sometext new"
       ],
       "tags": [
         "#tag1",
-        "#tag2"
+        "#TAG1"
       ],
       "id": 1
     }

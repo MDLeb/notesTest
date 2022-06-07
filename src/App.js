@@ -25,6 +25,19 @@ function App() {
     getAllNotesDB().then(setNotesData);
   }
 
+  const updateNodeDB = async (note, ID) => {
+    await fetch(`http://localhost:8080/notes/${ID}`, {
+    method: 'PATCH',
+    headers:{
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(note)
+    });
+    getAllNotesDB().then(setNotesData);
+  }
+  //updateNodeDB({title:'updated', content:['updated'], tags:[]}, 10);
+
+
   const removeNoteDB = async (ID) => {
     await fetch(`http://localhost:8080/notes/${ID}`, {
       method: 'DELETE'
@@ -57,7 +70,7 @@ function App() {
 
 
   return (
-    <NotesContext.Provider value={[NotesData, setNotesData, removeNoteDB, addNoteDB, filter, setFilter]}>
+    <NotesContext.Provider value={[NotesData, setNotesData, removeNoteDB, addNoteDB, updateNodeDB, filter, setFilter]}>
           <div className="App">
             <Header tags={Tags}></Header>
             <NotesForm></NotesForm>

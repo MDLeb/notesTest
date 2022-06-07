@@ -4,10 +4,16 @@
     width: 100%;
     box-shadow: 0 2px 10px 2px #ccc;
     background-color: #eee;
+    
+    >div {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
     .tags {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
+        word-break: break-all;
         justify-content: space-evenly;
     }
     .tag {

@@ -3,11 +3,11 @@ import { NotesContext } from "../../App";
 import Button from "../UI/button/button";
 import styles from './notesForm.module.scss';
 
-const NotesForm = () => {
+const NotesForm = ({edit = false, note = {}, changeIsEditing = {}}) => {
 
-    let title = useRef('');
-    let [content, setContent] = useState('');
-    let [tags, setTags] = useState([]);
+    let [title, setTitle] = useState(edit ? note.title : '')
+    let [content, setContent] = useState(edit ? note.content : '');
+    let [tags, setTags] = useState(edit ? note.tags : []);
 
 
     const findTags = (e) => {
@@ -31,16 +31,26 @@ const NotesForm = () => {
         return tagsTmp;
     }
 
-    let onAdd = async (e, addNoteDB) => {
+    let onSave = async (e, updateNodeDB) => {
         newNote  = {
-            'title': title.current.value,
+            'title': title,
             'content': content,
             'tags': findTags(e)
         };
-        //console.log(title.current.value, newNote.title);
+        changeIsEditing(false);
+        console.log(newNote);
+        updateNodeDB(newNote, note.id);
+    }
+
+    let onAdd = async (e, addNoteDB) => {
+        newNote  = {
+            'title': title,
+            'content': content,
+            'tags': findTags(e)
+        };
         if(!newNote.title && !newNote.content) return;
         await addNoteDB(newNote);
-        title.current.value = '';
+        setTitle('');
         setTags([]);
         setContent('');
     }
@@ -56,45 +66,45 @@ const NotesForm = () => {
 
     return (
         <NotesContext.Consumer>
-            {([NotesData, setNotesData, removeNoteDB, addNoteDB, filter, setFilter]) => (
-                <div className={styles.form_block}>
-                    <input placeholder="title" type="text" ref={title} 
+            {([NotesData, setNotesData, removeNoteDB, addNoteDB, updateNodeDB, filter, setFilter]) => (
+                <div className={edit ? styles.form_block_edit : styles.form_block}>
+                    <input placeholder="title" type="text" value={title}
                         onKeyDown={(e) => {
-                            e.target.value = title.current.value;
                             if(e.code == 'Enter' && e.ctrlKey)
-                                onAdd(e, addNoteDB);                           
+                                edit ? onSave(e, updateNodeDB) : onAdd(e, addNoteDB);                           
                         }} 
                         onChange={(e) => {
+                            setTitle(e.target.value)
                             if(e.target.value || e.target.parentNode.querySelector('textarea').value) 
                                 setButtonDisable(false);
                             else setButtonDisable(true);
                         }}></input>
-                    <textarea placeholder="content" type="text" value={content} 
+                    <textarea maxLength={700} placeholder="content" type="text" value={content} 
                         onKeyUp={(e) => {
                             if(e.target.value == '') setTags([]);
                             setTags([...findTags(e)]);
                         }}
                         onKeyDown={(e) => {
                             if(e.code == 'Enter' && e.ctrlKey)
-                                onAdd(e, addNoteDB);
+                                edit ? onSave(e, updateNodeDB) : onAdd(e, addNoteDB);
                         }}
                         onChange={(e) => {
                             setContent([e.target.value]);
-                            if(title.current.value || e.target.value) setButtonDisable(false);
+                            if(title || e.target.value) setButtonDisable(false);
                             else setButtonDisable(true);
                         }}
                     >
                     </textarea>
-                    <div className={styles.form_block__btns}>
                         <div className={styles.tags}>
                             {tags?.length ?
                             tags.map((tag, index) => <span key={index}>{tag}</span>) : ''}
                         </div>
                         <Button disable={buttonDisable} onClick={(e) => {
-                            onAdd(e, addNoteDB);
-                        }}>add</Button>
-                    </div>
-                    
+                            edit ? onSave(e, updateNodeDB) : onAdd(e, addNoteDB);
+                        }}>{edit ? 'save' : 'add'}</Button>
+                        {
+                            edit ? <button className={styles.exit_btn} onClick={() => changeIsEditing(false)}>+</button> : ''
+                        }
                 </div>
             )}
         </NotesContext.Consumer>
