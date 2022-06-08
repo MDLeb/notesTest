@@ -79,6 +79,7 @@ function App() {
       .filter(elem => elem)
       .map(elem => `#${elem}`
       .replace(',', ''));
+    tagsArr = Array.from(new Set(tagsArr));
     setTags(tagsArr);
   }
 
