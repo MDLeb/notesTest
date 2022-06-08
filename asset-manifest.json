@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/notesTest/static/css/main.fe2c9093.css",
+    "main.js": "/notesTest/static/js/main.fc2e078d.js",
+    "static/media/ico_remove.png": "/notesTest/static/media/ico_remove.990038c38385685186ab.png",
+    "index.html": "/notesTest/index.html",
+    "main.fe2c9093.css.map": "/notesTest/static/css/main.fe2c9093.css.map",
+    "main.fc2e078d.js.map": "/notesTest/static/js/main.fc2e078d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fe2c9093.css",
+    "static/js/main.fc2e078d.js"
+  ]
+}
