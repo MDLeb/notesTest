@@ -21,14 +21,12 @@ function App() {
 
   const addNoteDB = async (note) => {
     let  formBody = [];
-    console.log(note);
     for (let property in note) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(note[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-    console.log(formBody);
     await fetch('https://notesmdleb.herokuapp.com/notes', {
     method: 'POST',
     headers:{
@@ -42,14 +40,12 @@ function App() {
 
   const updateNodeDB = async (note, ID) => {
     let  formBody = [];
-    console.log(note);
     for (let property in note) {
       let encodedKey = encodeURIComponent(property);
       let encodedValue = encodeURIComponent(note[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-    console.log(formBody);
 
     await fetch(`https://notesmdleb.herokuapp.com/notes/${ID}`, {
     method: 'POST',//POST

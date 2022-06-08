@@ -13,7 +13,6 @@ const NotesForm = ({edit = false, note = {}, changeIsEditing = {}}) => {
     const findTags = (e) => {
         let tagsTmp = tags;
        
-        console.log(tagsTmp);
         if(e.code != 'Space' && e.code != 'Backspace' && e.target.nodeName != 'BUTTON' && (e.code != 'Enter'|| !e.ctrlKey)) return tagsTmp;
         let contentArr = ((e.code == 'Space' || e.code == 'Backspace') ?
             e.target.value.split(' ') :
@@ -40,7 +39,6 @@ const NotesForm = ({edit = false, note = {}, changeIsEditing = {}}) => {
             'tags': findTags(e)
         };
         changeIsEditing(false);
-        console.log(newNote);
         updateNodeDB(newNote, note.id);
     }
 

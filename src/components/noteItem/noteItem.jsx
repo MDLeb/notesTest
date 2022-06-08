@@ -8,11 +8,9 @@ const NoteItem = ({note}) => {
     const highlightTags = () => {
         let content = note.content;
         note.tags?.split(',').forEach(tag => {
-            console.log(tag);
            content = content.replace(`${tag}`, `<span>${tag}</span>`)
         });
         content = document.createElement('div').innerHTML = content;
-        console.log(content);
         return content;
     }
 
