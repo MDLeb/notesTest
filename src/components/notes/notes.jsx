@@ -7,14 +7,14 @@ const Notes = () => {
     return (
         <NotesContext.Consumer>
             {([NotesData, setNotesData,  removeNoteDB, addNoteDB, updateNodeDB, filter, setFilter]) => (
-                <div className={ NotesData.length > 3 ? styles.notes_board : styles.notes_board_4} style={{height: (NotesData.length/3 + 1)*300 + 'px'}} >
+                <div className={ NotesData.length > 3 ? styles.notes_board : styles.notes_board_4} style={{height: (NotesData.length/3 + 1)*350 + 'px'}} >
                 {
                     NotesData.length == 0 ?
-                    <div>There're not any notes</div> :
+                    <div className={styles.empty} >There're not any notes</div> :
                     NotesData.filter(elem => {
                         let check = true;
                         filter.forEach(value => {
-                            if (!elem.content[0]?.toLowerCase().includes(value.toLowerCase()) &&
+                            if (!elem.content?.toLowerCase().includes(value.toLowerCase()) &&
                                 !elem.title?.toLowerCase().includes(value.toLowerCase()))
                                 check = false;
                         });

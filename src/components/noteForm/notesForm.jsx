@@ -7,11 +7,13 @@ const NotesForm = ({edit = false, note = {}, changeIsEditing = {}}) => {
 
     let [title, setTitle] = useState(edit ? note.title : '')
     let [content, setContent] = useState(edit ? note.content : '');
-    let [tags, setTags] = useState(edit ? note.tags : []);
+    let [tags, setTags] = useState(edit ? note.tags.includes(',') ? note.tags.split(',') : [note.tags] : []);
 
 
     const findTags = (e) => {
         let tagsTmp = tags;
+       
+        console.log(tagsTmp);
         if(e.code != 'Space' && e.code != 'Backspace' && e.target.nodeName != 'BUTTON' && (e.code != 'Enter'|| !e.ctrlKey)) return tagsTmp;
         let contentArr = ((e.code == 'Space' || e.code == 'Backspace') ?
             e.target.value.split(' ') :
@@ -68,7 +70,7 @@ const NotesForm = ({edit = false, note = {}, changeIsEditing = {}}) => {
         <NotesContext.Consumer>
             {([NotesData, setNotesData, removeNoteDB, addNoteDB, updateNodeDB, filter, setFilter]) => (
                 <div className={edit ? styles.form_block_edit : styles.form_block}>
-                    <input placeholder="title" type="text" value={title}
+                    <input placeholder="title" type="text" value={title} maxLength={50}
                         onKeyDown={(e) => {
                             if(e.code == 'Enter' && e.ctrlKey)
                                 edit ? onSave(e, updateNodeDB) : onAdd(e, addNoteDB);                           
@@ -96,8 +98,9 @@ const NotesForm = ({edit = false, note = {}, changeIsEditing = {}}) => {
                     >
                     </textarea>
                         <div className={styles.tags}>
-                            {tags?.length ?
-                            tags.map((tag, index) => <span key={index}>{tag}</span>) : ''}
+                            {
+                            tags.length > 0 ?
+                                tags.map((tag, index) => <span key={index}>{tag}</span>) : ''}
                         </div>
                         <Button disable={buttonDisable} onClick={(e) => {
                             edit ? onSave(e, updateNodeDB) : onAdd(e, addNoteDB);

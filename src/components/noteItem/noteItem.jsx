@@ -6,11 +6,13 @@ import NotesForm from "../noteForm/notesForm";
 
 const NoteItem = ({note}) => {
     const highlightTags = () => {
-        let content = note.content[0];
-        note.tags.forEach(tag => {
+        let content = note.content;
+        note.tags?.split(',').forEach(tag => {
+            console.log(tag);
            content = content.replace(`${tag}`, `<span>${tag}</span>`)
         });
-        //content = document.createElement('div').innerHTML = content;
+        content = document.createElement('div').innerHTML = content;
+        console.log(content);
         return content;
     }
 

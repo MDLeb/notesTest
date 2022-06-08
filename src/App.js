@@ -5,41 +5,65 @@ import NotesForm from './components/noteForm/notesForm'
 import Header from './components/header/header';
 const NotesContext = createContext();
 
+
 function App() {
+
   const [NotesData, setNotesData] = useState([]);
   const [Tags, setTags] = useState([]);
   const [filter, setFilter] = useState(['']);
 
   const getAllNotesDB = async () => 
-  await fetch('http://localhost:8080/notes')
-  .then(result => result.json());
+  await fetch('https://notesmdleb.herokuapp.com/notes'
+  )
+  .then(result => result.json())
+  .then(res => res);
+  
 
   const addNoteDB = async (note) => {
-    await fetch('http://localhost:8080/notes', {
+    let  formBody = [];
+    console.log(note);
+    for (let property in note) {
+      let encodedKey = encodeURIComponent(property);
+      let encodedValue = encodeURIComponent(note[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log(formBody);
+    await fetch('https://notesmdleb.herokuapp.com/notes', {
     method: 'POST',
     headers:{
-      'Content-Type': 'application/json'
+      'Content-Type':  "application/x-www-form-urlencoded"
     },
-    body: JSON.stringify(note)
+    body: formBody
     });
+    
     getAllNotesDB().then(setNotesData);
   }
 
   const updateNodeDB = async (note, ID) => {
-    await fetch(`http://localhost:8080/notes/${ID}`, {
-    method: 'PATCH',
+    let  formBody = [];
+    console.log(note);
+    for (let property in note) {
+      let encodedKey = encodeURIComponent(property);
+      let encodedValue = encodeURIComponent(note[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log(formBody);
+
+    await fetch(`https://notesmdleb.herokuapp.com/notes/${ID}`, {
+    method: 'POST',//POST
     headers:{
-      'Content-Type': 'application/json'
+      'Content-Type': "application/x-www-form-urlencoded"
     },
-    body: JSON.stringify(note)
+    body: formBody
     });
     getAllNotesDB().then(setNotesData);
   }
-  //updateNodeDB({title:'updated', content:['updated'], tags:[]}, 10);
 
 
   const removeNoteDB = async (ID) => {
-    await fetch(`http://localhost:8080/notes/${ID}`, {
+    await fetch(`https://notesmdleb.herokuapp.com/notes/${ID}`, {
       method: 'DELETE'
     })
     .then(res => res)
@@ -50,18 +74,21 @@ function App() {
   let updateTags = () => {
     let tagsArr = [];
     NotesData.forEach(note => {
-      tagsArr.push(...note.tags)
+      if(note.tags) 
+        tagsArr.push(note.tags)
     });
-    tagsArr.forEach((tag, index) => {
-      let temp = tagsArr.filter(t => t == tag);
-      if(temp.length > 1)
-        tagsArr.splice(index, 1)
-    })
+   tagsArr = tagsArr
+      .join()
+      .split('#')
+      .filter(elem => elem)
+      .map(elem => `#${elem}`
+      .replace(',', ''));
     setTags(tagsArr);
   }
 
   useEffect(() => {
     getAllNotesDB().then(setNotesData).then(updateTags)
+    //getAllNotesDB();
    }, []);
 
   useEffect(() => {
